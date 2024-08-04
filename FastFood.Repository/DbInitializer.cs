@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using FastFood.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -29,16 +30,37 @@ namespace FastFood.Repository
                 {
                     _context.Database.Migrate();
                 }
-            }catch(Exception ex)
+            } catch (Exception ex)
             {
                 throw;
             }
-            if(_context.Roles.Any(x=>x.Name=="Manager"))
+
+            if (_context.Roles.Any(x => x.Name == "Manager"))
             {
                 return;
             }
+            else
+            {
+                _roleManager.CreateAsync(new IdentityRole("Manager")).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole("Admin")).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole("Customer")).GetAwaiter().GetResult();
+            }
 
-            _roleManager.CreateAsync(new IdentityRole("Manager")).GetAwaiter().GetResult();
+
+            var user = new ApplicationUser()
+            {
+                UserName = "admin@gmail.com",
+                Email = "admin@gmail.com",
+                Name="Admin",
+                City="Xyz",
+                Address="Xyz",
+                PostalCode="333333"
+            };
+
+            _userManager.CreateAsync(user, "Admin@123").GetAwaiter().GetResult();
+            _userManager.AddToRoleAsync(user, "Admin");
+
+
 
 
 

@@ -10,7 +10,7 @@ namespace FastFood.Models
     public class OrderHeader
     {
         public int Id { get; set; }
-        public int ApplicationUserId { get; set; }
+        public string ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         [DataType(DataType.Date)]
         public DateTime OrderDate { get; set; }
