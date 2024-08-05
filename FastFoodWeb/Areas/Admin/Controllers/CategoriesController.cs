@@ -17,17 +17,27 @@ namespace FastFoodWeb.Areas.Admin.Controllers
             _context = context;
         }
 
+
+
+
+     /*   shu yer*/
+
+
+
+
         [HttpGet]
         public IActionResult Index()
         {
-            var listFromDb = _context.Categories.ToList().Select(
-                x=>new CategoryViewModels()
-                {
-                    Id= x.Id,
-                    Title= x.Title,
-                }
-                ).ToList();
-            return View(listFromDb);
+           
+            var result = _context.Categories.ToList();
+            var categModel = result.Select(x =>
+            new CategoryViewModels()
+            {
+                Id = x.Id,
+                Title = x.Title,
+            }).ToList();
+
+            return View(categModel);
         }
 
         [HttpGet]
