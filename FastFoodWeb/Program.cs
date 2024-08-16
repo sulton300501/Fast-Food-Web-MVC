@@ -17,7 +17,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("Db"),
-        b => b.MigrationsAssembly("FastFoodWeb")); // Migratsiya to'plami
+        b => b.MigrationsAssembly("FastFoodWeb"))
+                  .EnableSensitiveDataLogging(); // Migratsiya to'plami
 });
 
 

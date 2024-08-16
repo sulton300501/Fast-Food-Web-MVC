@@ -12,15 +12,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FastFoodWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240804173306_sanjar")]
-    partial class sanjar
+    [Migration("20240815055758_sultonmalik")]
+    partial class sultonmalik
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -111,6 +111,9 @@ namespace FastFoodWeb.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Image")
                         .HasColumnType("text");
 
                     b.Property<double>("Price")
@@ -492,7 +495,7 @@ namespace FastFoodWeb.Migrations
                         .IsRequired();
 
                     b.HasOne("FastFood.Models.SubCategory", "SubCategory")
-                        .WithMany()
+                        .WithMany("Items")
                         .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -597,6 +600,11 @@ namespace FastFoodWeb.Migrations
                     b.Navigation("Items");
 
                     b.Navigation("SubCategories");
+                });
+
+            modelBuilder.Entity("FastFood.Models.SubCategory", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }
